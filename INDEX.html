@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food UI/UX — Anisha Sharma</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --cream:#f0ede6;
+    --dark:#0d1333;
+    --blue:#2040e0;
+    --muted:#888;
+    --card:#fff;
+  }
+  body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);scroll-behavior:smooth;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--cream);border-bottom:1px solid #ddd9d0;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:52px;}
+  .nav-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:var(--blue);font-weight:700;}
+  .nav-links{display:flex;gap:32px;}
+  .nav-links a{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#999;text-decoration:none;padding-bottom:2px;transition:color .2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--dark);}
+  .nav-links a.active{border-bottom:2px solid var(--blue);color:var(--dark);}
+  .nav-right{width:6px;height:36px;background:var(--blue);border-radius:3px;}
+
+  /* SECTIONS */
+  section{min-height:100vh;padding:100px 80px 80px;position:relative;}
+  section.blue-bg{background:#2040e0;color:#fff;}
+
+  /* DOTS BG */
+  .dots-bg{background-image:radial-gradient(circle,#c8c4bc 1px,transparent 1px);background-size:24px 24px;}
+
+  /* HERO */
+  #overview{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:120px;}
+  .badge-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid #ccc;border-radius:999px;padding:6px 18px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#555;margin-bottom:48px;}
+  .badge-dot{width:7px;height:7px;border-radius:50%;background:#aaa;}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(64px,9vw,120px);line-height:1;font-weight:900;color:var(--dark);margin-bottom:0;}
+  .hero-blue{color:var(--blue);font-style:italic;}
+  .hero-sub{font-size:13px;letter-spacing:.15em;color:#aaa;margin-top:24px;margin-bottom:56px;}
+  .info-card{background:#fff;border-radius:16px;padding:28px 48px;display:flex;gap:72px;align-items:flex-start;box-shadow:0 2px 24px rgba(0,0,0,.06);}
+  .info-col{display:flex;flex-direction:column;gap:6px;}
+  .info-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#aaa;font-weight:600;}
+  .info-val{font-size:18px;font-weight:600;color:var(--dark);}
+  .info-divider{width:1px;background:#eee;align-self:stretch;}
+  .platform-pills{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:56px;}
+  .platform-pill{border:1px solid #ccc;border-radius:999px;padding:8px 20px;font-size:13px;display:flex;align-items:center;gap:8px;background:#fff;}
+  .dot{width:10px;height:10px;border-radius:50%;}
+  .dot-orange{background:#f97316;}
+  .dot-red{background:#ef4444;}
+  .dot-purple{background:#a855f7;}
+  .dot-green{background:#22c55e;}
+  .dot-yellow{background:#eab308;}
+  .dot-blue{background:#3b82f6;}
+
+  /* TICKER */
+  .ticker-wrap{background:#2040e0;overflow:hidden;padding:14px 0;white-space:nowrap;}
+  .ticker-inner{display:inline-block;animation:ticker 22s linear infinite;}
+  .ticker-inner span{font-size:12px;letter-spacing:.12em;color:#fff;text-transform:uppercase;margin-right:32px;}
+  @keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+  /* SECTION LABEL */
+  .section-label{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);margin-bottom:18px;font-weight:600;}
+  .section-label-line{width:28px;height:2px;background:var(--blue);}
+  .section-label.white{color:#fff;}
+  .section-label.white .section-label-line{background:#fff;}
+  .section-h2{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);font-weight:900;font-style:italic;line-height:1.05;margin-bottom:16px;}
+  .section-desc{font-size:15px;color:#777;max-width:520px;line-height:1.6;margin-bottom:48px;}
+
+  /* PLATFORMS */
+  #platforms{padding-top:80px;}
+  .filter-row{display:flex;gap:12px;margin-bottom:40px;flex-wrap:wrap;}
+  .filter-btn{border:1.5px solid #ccc;border-radius:999px;padding:8px 20px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;}
+  .filter-btn.active{background:var(--dark);color:#fff;border-color:var(--dark);}
+  .filter-btn:hover:not(.active){border-color:#999;}
+  .platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .p-card{background:#fff;border-radius:20px;padding:28px;border:1px solid #eee;}
+  .p-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+  .p-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;}
+  .p-icon-orange{background:#fff3e8;} .p-icon-red{background:#ffeaea;} .p-icon-purple{background:#f3eeff;}
+  .p-icon-green{background:#eaffee;} .p-icon-yellow{background:#fffbe8;} .p-icon-blue-l{background:#eaf0ff;}
+  .p-badge{font-size:10px;font-weight:700;letter-spacing:.1em;padding:4px 12px;border-radius:999px;}
+  .badge-best{color:#1a9e6e;background:#e8faf3;border:1px solid #b6edd8;}
+  .badge-avg{color:#c47a00;background:#fff8e6;border:1px solid #f5d98a;}
+  .badge-worst{color:#d43a3a;background:#ffeaea;border:1px solid #f5b6b6;}
+  .p-name{font-family:'Playfair Display',serif;font-size:24px;font-style:italic;font-weight:700;margin-bottom:4px;}
+  .p-tagline{font-size:12px;font-weight:600;margin-bottom:4px;}
+  .orange-text{color:#f97316;} .red-text{color:#ef4444;} .purple-text{color:#a855f7;} .green-text{color:#22c55e;} .yellow-text{color:#d97706;} .blue-text{color:#3b82f6;}
+  .p-sdg{font-size:11px;color:#aaa;margin-bottom:16px;}
+  .p-bullets{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .p-bullets li{font-size:13px;color:#555;padding-left:14px;position:relative;border-bottom:1px solid #f0f0f0;padding-bottom:10px;}
+  .p-bullets li::before{content:'◆';position:absolute;left:0;font-size:7px;top:3px;color:#aaa;}
+  .p-why{border-radius:12px;padding:14px 16px;margin-top:16px;}
+  .p-why-orange{background:#fff3e8;} .p-why-red{background:#ffeaea;} .p-why-purple{background:#f3eeff;}
+  .p-why-green{background:#eaffee;} .p-why-yellow{background:#fffbe8;} .p-why-blue{background:#eaf0ff;}
+  .p-why-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;color:#888;}
+  .p-why-text{font-size:13px;color:#444;margin-bottom:10px;}
+  .p-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .p-tag{font-size:11px;border:1px solid #ddd;border-radius:999px;padding:3px 10px;color:#555;background:#fff;}
+
+  /* SCORES */
+  #scores{min-height:auto;padding:80px;}
+  .scores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .score-card{background:#fff;border-radius:20px;padding:28px 28px 20px;border-top:4px solid;}
+  .score-card.best{border-color:#22c55e;}
+  .score-card.avg{border-color:#f59e0b;}
+  .score-card.worst{border-color:#ef4444;}
+  .score-tier{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;font-weight:700;margin-bottom:4px;}
+  .score-tier.best{color:#22c55e;} .score-tier.avg{color:#f59e0b;} .score-tier.worst{color:#ef4444;}
+  .score-apps{font-size:12px;color:#aaa;margin-bottom:20px;}
+  .score-row{margin-bottom:14px;}
+  .score-row-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
+  .score-num{font-weight:600;}
+  .score-num.best{color:#22c55e;} .score-num.avg{color:#f59e0b;} .score-num.worst{color:#ef4444;}
+  .bar-track{height:5px;background:#eee;border-radius:999px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:999px;}
+  .bar-best{background:#22c55e;} .bar-avg{background:#f59e0b;} .bar-worst{background:#ef4444;}
+
+  /* EVOLUTION */
+  #evolution{min-height:auto;padding:80px;}
+  .evo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .evo-card{background:#fff;border-radius:20px;padding:24px 24px 20px;border:1px solid #eee;}
+  .evo-name{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;font-weight:700;margin-bottom:12px;}
+  .evo-divider{height:1px;background:#eee;margin-bottom:14px;}
+  .evo-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;}
+  .evo-badge{font-size:9px;font-weight:700;letter-spacing:.1em;padding:3px 8px;border-radius:4px;white-space:nowrap;margin-top:1px;}
+  .then-badge{background:#eee;color:#777;}
+  .now-badge-orange{background:#fff3e8;color:#f97316;} .now-badge-red{background:#ffeaea;color:#ef4444;}
+  .now-badge-purple{background:#f3eeff;color:#a855f7;} .now-badge-green{background:#eaffee;color:#22c55e;}
+  .now-badge-yellow{background:#fffbe8;color:#d97706;} .now-badge-blue{background:#eaf0ff;color:#3b82f6;}
+  .evo-arrow{font-size:11px;color:#aaa;margin:6px 0 4px 0;padding-left:2px;}
+
+  /* DESIGN / COMPARISON */
+  #design{padding:80px;}
+  .principles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .principle-card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:18px;padding:24px;}
+  .principle-icon{font-size:28px;margin-bottom:16px;}
+  .principle-title{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;font-weight:700;margin-bottom:8px;color:#fff;}
+  .principle-desc{font-size:13px;color:rgba(255,255,255,.7);line-height:1.5;}
+  .principles-grid-2{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:20px;}
+
+  /* COMPARISON */
+  #comparison{padding:80px;}
+  .compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px;}
+  .cmp-card{background:#fff;border-radius:20px;padding:24px;border-top:4px solid;}
+  .cmp-card.best{border-color:#22c55e;} .cmp-card.avg{border-color:#f59e0b;} .cmp-card.worst{border-color:#ef4444;}
+  .cmp-tier{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;font-weight:700;margin-bottom:14px;}
+  .cmp-tier.best{color:#22c55e;} .cmp-tier.avg{color:#f59e0b;} .cmp-tier.worst{color:#ef4444;}
+  .cmp-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .cmp-list li{font-size:13px;color:#555;padding:8px 0;border-bottom:1px solid #f0f0f0;display:flex;gap:10px;align-items:flex-start;}
+  .cmp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+  .cmp-dot-green{background:#22c55e;} .cmp-dot-yellow{background:#f59e0b;} .cmp-dot-red{background:#ef4444;}
+  .cmp-table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #eee;}
+  .cmp-table th{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:14px 18px;text-align:left;}
+  .cmp-table th:nth-child(1){color:#aaa;}
+  .cmp-table th:nth-child(2){color:#22c55e;}
+  .cmp-table th:nth-child(3){color:#f59e0b;}
+  .cmp-table th:nth-child(4){color:#ef4444;}
+  .cmp-table td{font-size:13px;padding:12px 18px;border-top:1px solid #f0f0f0;}
+  .cmp-table td:nth-child(1){font-weight:600;color:#333;}
+  .cmp-table td:nth-child(2){color:#22c55e;}
+  .cmp-table td:nth-child(3){color:#f59e0b;}
+  .cmp-table td:nth-child(4){color:#ef4444;}
+
+  /* FLAWS */
+  #flaws{padding:80px;}
+  .flaws-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .flaw-card{background:#fff;border-radius:18px;padding:24px;border:1px solid #eee;}
+  .flaw-icon{font-size:28px;margin-bottom:14px;}
+  .flaw-title{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;font-weight:700;color:#c0392b;margin-bottom:10px;}
+  .flaw-desc{font-size:13px;color:#666;line-height:1.55;}
+  .flaws-grid-2{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px;}
+
+  /* FOOTER */
+  footer{background:var(--cream);background-image:radial-gradient(circle,#c8c4bc 1px,transparent 1px);background-size:24px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 40px 80px;text-align:center;position:relative;}
+  footer::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,var(--cream) 0%,#dde4f0 100%);z-index:0;}
+  .footer-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;}
+  .thank-you{font-family:'Playfair Display',serif;font-size:clamp(72px,12vw,160px);font-weight:900;color:var(--dark);line-height:1;margin-bottom:60px;}
+  .footer-card{background:#fff;border-radius:16px;padding:24px 40px;display:flex;gap:0;align-items:stretch;box-shadow:0 2px 24px rgba(0,0,0,.06);}
+  .footer-left{padding-right:40px;display:flex;flex-direction:column;gap:4px;}
+  .footer-name{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;font-weight:700;color:var(--dark);}
+  .footer-reg{font-size:13px;color:#aaa;}
+  .footer-divider{width:1px;background:#eee;margin:0 0 0 0;}
+  .footer-right{padding-left:40px;display:flex;flex-direction:column;justify-content:center;gap:4px;}
+  .footer-tags{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#aaa;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Food UI/UX</div>
+  <div class="nav-links">
+    <a href="#overview" class="active">Overview</a>
+    <a href="#platforms">Platforms</a>
+    <a href="#scores">Scores</a>
+    <a href="#evolution">Evolution</a>
+    <a href="#design">Design</a>
+    <a href="#comparison">Comparison</a>
+    <a href="#flaws">Flaws</a>
+  </div>
+  <div class="nav-right"></div>
+</nav>
+
+<!-- HERO / OVERVIEW -->
+<section id="overview" class="dots-bg">
+  <div class="badge-pill"><span class="badge-dot"></span>CSE3252 — UI/UX DESIGN</div>
+  <div class="hero-title">Food Delivery</div>
+  <div class="hero-title hero-blue"><em>UI/UX</em></div>
+  <div class="hero-title"><em>Case Study</em></div>
+  <div class="hero-sub">DESIGN · USABILITY · PERSONALIZATION · ETHICS</div>
+  <div class="info-card">
+    <div class="info-col">
+      <div class="info-label">Presented By</div>
+      <div class="info-val">Anisha Sharma</div>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-col">
+      <div class="info-label">Reg. No.</div>
+      <div class="info-val">23FE10CSE00401</div>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-col">
+      <div class="info-label">Course</div>
+      <div class="info-val">CSE3252 – UI/UX Design</div>
+    </div>
+  </div>
+  <div class="platform-pills">
+    <div class="platform-pill"><span class="dot dot-orange"></span>Swiggy</div>
+    <div class="platform-pill"><span class="dot dot-red"></span>Zomato</div>
+    <div class="platform-pill"><span class="dot dot-purple"></span>Magicpin</div>
+    <div class="platform-pill"><span class="dot dot-green"></span>EatSure</div>
+    <div class="platform-pill"><span class="dot dot-yellow"></span>Dunzo</div>
+    <div class="platform-pill"><span class="dot dot-blue"></span>Shadowfax</div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span>DESIGN THINKING</span><span>•</span><span>CSE3252</span><span>•</span><span>SWIGGY</span><span>•</span><span>ZOMATO</span><span>•</span><span>MAGICPIN</span><span>•</span><span>EATSURE</span><span>•</span><span>DUNZO</span><span>•</span><span>SHADOWFAX</span><span>•</span><span>UI/UX CASE STUDY</span><span>•</span><span>FOOD DELIVERY</span><span>•</span>
+    <span>DESIGN THINKING</span><span>•</span><span>CSE3252</span><span>•</span><span>SWIGGY</span><span>•</span><span>ZOMATO</span><span>•</span><span>MAGICPIN</span><span>•</span><span>EATSURE</span><span>•</span><span>DUNZO</span><span>•</span><span>SHADOWFAX</span><span>•</span><span>UI/UX CASE STUDY</span><span>•</span><span>FOOD DELIVERY</span><span>•</span>
+  </div>
+</div>
+
+<!-- PLATFORMS -->
+<section id="platforms" class="dots-bg">
+  <div class="section-label"><span class="section-label-line"></span>PLATFORM ANALYSIS</div>
+  <div class="section-h2">Six Apps, One Comparison</div>
+  <div class="section-desc">Evaluating India's top food delivery platforms across design, personalization, navigation, and delivery experience.</div>
+  <div class="filter-row">
+    <button class="filter-btn active">ALL PLATFORMS</button>
+    <button class="filter-btn">♦ BEST</button>
+    <button class="filter-btn">♦ AVERAGE</button>
+    <button class="filter-btn">♦ WORST</button>
+  </div>
+  <div class="platform-grid">
+    <!-- Swiggy -->
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-icon p-icon-orange"><span class="dot dot-orange" style="width:24px;height:24px;"></span></div>
+        <span class="p-badge badge-best">BEST</span>
+      </div>
+      <div class="p-name orange-text">Swiggy</div>
+      <div class="p-tagline orange-text">Hyper-local food + quick commerce</div>
+      <div class="p-sdg">SDG 8 — Decent Work & Economic Growth</div>
+      <ul class="p-bullets">
+        <li>Intuitive search with cuisine filters and dietary tags</li>
+        <li>Instamart and Genie integrated seamlessly into one app</li>
+        <li>Live order tracking with real-time ETA updates</li>
+        <li>Loyalty via Swiggy One — bundled savings across services</li>
+      </ul>
+      <div class="p-why p-why-orange">
+        <div class="p-why-label">Why It Exists</div>
+        <div class="p-why-text">Hyperlocal delivery across food, grocery, and errand categories</div>
+        <div class="p-tags"><span class="p-tag">Quick commerce</span><span class="p-tag">Instamart</span><span class="p-tag">Genie</span></div>
+      </div>
+    </div>
+    <!-- Zomato -->
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-icon p-icon-red"><span class="dot dot-red" style="width:24px;height:24px;"></span></div>
+        <span class="p-badge badge-best">BEST</span>
+      </div>
+      <div class="p-name red-text">Zomato</div>
+      <div class="p-tagline red-text">Food discovery + delivery platform</div>
+      <div class="p-sdg">SDG 9 — Industry, Innovation & Infrastructure</div>
+      <ul class="p-bullets">
+        <li>Rich restaurant pages with photos, reviews and menus</li>
+        <li>Zomato Gold offers dining-out and delivery benefits</li>
+        <li>Live events and dining experiences via Zomato Live</li>
+        <li>Smart reorder and AI-based personalization</li>
+      </ul>
+      <div class="p-why p-why-red">
+        <div class="p-why-label">Why It Exists</div>
+        <div class="p-why-text">Full-stack food lifestyle platform — delivery, dining, events</div>
+        <div class="p-tags"><span class="p-tag">Zomato Gold</span><span class="p-tag">Zomato Live events</span></div>
+      </div>
+    </div>
+    <!-- Magicpin -->
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-icon p-icon-purple"><span class="dot dot-purple" style="width:24px;height:24px;"></span></div>
+        <span class="p-badge badge-avg">AVERAGE</span>
+      </div>
+      <div class="p-name purple-text">Magicpin</div>
+      <div class="p-tagline purple-text">Local discovery + cashback platform</div>
+      <div class="p-sdg">SDG 11 — Sustainable Cities & Communities</div>
+      <ul class="p-bullets">
+        <li>Cashback UX is differentiating but adds cognitive complexity</li>
+        <li>Discovery for local stores is strong but cluttered</li>
+        <li>Partner merchant deals drive engagement but confuse new users</li>
+        <li>Social sharing features feel tacked on</li>
+      </ul>
+      <div class="p-why p-why-purple">
+        <div class="p-why-label">Why It Exists</div>
+        <div class="p-why-text">Cashback + ONDC commerce for local discovery</div>
+        <div class="p-tags"><span class="p-tag">Partner merchant deals</span><span class="p-tag">Social sharing</span></div>
+      </div>
+    </div>
+    <!-- EatSure -->
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-icon p-icon-green"><span class="dot dot-green" style="width:24px;height:24px;"></span></div>
+        <span class="p-badge badge-avg">AVERAGE</span>
+      </div>
+      <div class="p-name green-text">EatSure</div>
+      <div class="p-tagline green-text">Multi-brand cloud kitchen platform</div>
+      <div class="p-sdg">SDG 3 — Good Health & Well-Being</div>
+      <ul class="p-bullets">
+        <li>Multi-brand cart is innovative but complex for new users</li>
+        <li>UI feels dated — typography and spacing need refinement</li>
+        <li>Content hierarchy on brand listing pages is weak</li>
+        <li>Delivery tracking functional but less polished than peers</li>
+        <li>Personalization limited to basic order history suggestions</li>
+      </ul>
+      <div class="p-why p-why-green">
+        <div class="p-why-label">Why It Exists</div>
+        <div class="p-why-text">Single-cart ordering from multiple cloud kitchen brands</div>
+        <div class="p-tags"><span class="p-tag">Multi-brand cart</span><span class="p-tag">Hygiene ratings</span><span class="p-tag">Subscription meals</span></div>
+      </div>
+    </div>
+    <!-- Dunzo -->
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-icon p-icon-yellow"><span class="dot dot-yellow" style="width:24px;height:24px;"></span></div>
+        <span class="p-badge badge-worst">WORST</span>
+      </div>
+      <div class="p-name yellow-text" style="color:#d97706;">Dunzo</div>
+      <div class="p-tagline" style="color:#d97706;">Quick commerce & errand platform</div>
+      <div class="p-sdg">SDG 10 — Reduced Inequalities</div>
+      <ul class="p-bullets">
+        <li>Homepage cluttered with too many service categories</li>
+        <li>Food ordering UX feels bolted on — not purpose-built</li>
+        <li>Search unreliable, often returns irrelevant results</li>
+        <li>No coherent design system — each section looks different</li>
+        <li>Feature bloat has reduced core usability significantly</li>
+      </ul>
+      <div class="p-why p-why-yellow">
+        <div class="p-why-label">Why It Exists</div>
+        <div class="p-why-text">Broad errand-running beyond just food delivery</div>
+        <div class="p-tags"><span class="p-tag">Pick-up & drop service</span><span class="p-tag">Grocery + food combo</span><span class="p-tag">B2B delivery</span></div>
+      </div>
+    </div>
+    <!-- Shadowfax -->
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-icon p-icon-blue-l"><span class="dot dot-blue" style="width:24px;height:24px;"></span></div>
+        <span class="p-badge badge-worst">WORST</span>
+      </div>
+      <div class="p-name blue-text">Shadowfax</div>
+      <div class="p-tagline blue-text">B2B logistics & delivery-as-a-service</div>
+      <div class="p-sdg">SDG 12 — Responsible Consumption & Production</div>
+      <ul class="p-bullets">
+        <li>Consumer-facing app has weak visual hierarchy</li>
+        <li>Designed for businesses — consumer UX is an afterthought</li>
+        <li>Onboarding has too many steps with poor progress cues</li>
+        <li>Limited personalization — no smart suggestions</li>
+        <li>UI inconsistency across Android and iOS platforms</li>
+      </ul>
+      <div class="p-why p-why-blue">
+        <div class="p-why-label">Why It Exists</div>
+        <div class="p-why-text">Open-network logistics for businesses via ONDC</div>
+        <div class="p-tags"><span class="p-tag">API-first logistics</span><span class="p-tag">ONDC integration</span><span class="p-tag">Last-mile fulfilment</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCORES -->
+<section id="scores" style="background:var(--cream);padding:80px;">
+  <div class="section-label"><span class="section-label-line"></span>PERFORMANCE SCORES</div>
+  <div class="section-h2">Platform Ratings</div>
+  <div class="section-desc">Scores averaged per tier across UI, Personalization, Navigation, Delivery UX, and Value.</div>
+  <div class="scores-grid">
+    <div class="score-card best">
+      <div class="score-tier best">Best Tier</div>
+      <div class="score-apps">Swiggy · Zomato</div>
+      <div class="score-row"><div class="score-row-top"><span>UI Design</span><span class="score-num best">92</span></div><div class="bar-track"><div class="bar-fill bar-best" style="width:92%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Personalization</span><span class="score-num best">89</span></div><div class="bar-track"><div class="bar-fill bar-best" style="width:89%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Navigation</span><span class="score-num best">90</span></div><div class="bar-track"><div class="bar-fill bar-best" style="width:90%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Delivery UX</span><span class="score-num best">93</span></div><div class="bar-track"><div class="bar-fill bar-best" style="width:93%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Value</span><span class="score-num best">84</span></div><div class="bar-track"><div class="bar-fill bar-best" style="width:84%"></div></div></div>
+    </div>
+    <div class="score-card avg">
+      <div class="score-tier avg">Average Tier</div>
+      <div class="score-apps">Magicpin · EatSure</div>
+      <div class="score-row"><div class="score-row-top"><span>UI Design</span><span class="score-num avg">60</span></div><div class="bar-track"><div class="bar-fill bar-avg" style="width:60%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Personalization</span><span class="score-num avg">57</span></div><div class="bar-track"><div class="bar-fill bar-avg" style="width:57%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Navigation</span><span class="score-num avg">59</span></div><div class="bar-track"><div class="bar-fill bar-avg" style="width:59%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Delivery UX</span><span class="score-num avg">70</span></div><div class="bar-track"><div class="bar-fill bar-avg" style="width:70%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Value</span><span class="score-num avg">76</span></div><div class="bar-track"><div class="bar-fill bar-avg" style="width:76%"></div></div></div>
+    </div>
+    <div class="score-card worst">
+      <div class="score-tier worst">Worst Tier</div>
+      <div class="score-apps">Dunzo · Shadowfax</div>
+      <div class="score-row"><div class="score-row-top"><span>UI Design</span><span class="score-num worst">34</span></div><div class="bar-track"><div class="bar-fill bar-worst" style="width:34%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Personalization</span><span class="score-num worst">30</span></div><div class="bar-track"><div class="bar-fill bar-worst" style="width:30%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Navigation</span><span class="score-num worst">30</span></div><div class="bar-track"><div class="bar-fill bar-worst" style="width:30%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Delivery UX</span><span class="score-num worst">62</span></div><div class="bar-track"><div class="bar-fill bar-worst" style="width:62%"></div></div></div>
+      <div class="score-row"><div class="score-row-top"><span>Value</span><span class="score-num worst">59</span></div><div class="bar-track"><div class="bar-fill bar-worst" style="width:59%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EVOLUTION -->
+<section id="evolution" style="background:var(--cream);padding:80px;">
+  <div class="section-label"><span class="section-label-line"></span>UI/UX EVOLUTION</div>
+  <div class="section-h2">Then → Now</div>
+  <div class="section-desc">How each platform transformed its design and product philosophy over time.</div>
+  <div class="evo-grid">
+    <div class="evo-card">
+      <div class="evo-name orange-text">Swiggy</div>
+      <div class="evo-divider"></div>
+      <div class="evo-row"><span class="evo-badge then-badge">THEN</span><span style="font-size:13px;color:#555;">Restaurant delivery only</span></div>
+      <div class="evo-arrow">↓ Delivery App → Urban Super-App</div>
+      <div class="evo-row"><span class="evo-badge now-badge-orange">NOW</span><span style="font-size:13px;color:#333;font-weight:500;">Super-app: food + Instamart + Dineout + Genie</span></div>
+    </div>
+    <div class="evo-card">
+      <div class="evo-name red-text">Zomato</div>
+      <div class="evo-divider"></div>
+      <div class="evo-row"><span class="evo-badge then-badge">THEN</span><span style="font-size:13px;color:#555;">Restaurant directory & reviews</span></div>
+      <div class="evo-arrow">↓ Discovery Platform → Lifestyle OS</div>
+      <div class="evo-row"><span class="evo-badge now-badge-red">NOW</span><span style="font-size:13px;color:#333;font-weight:500;">Full stack: delivery + dining + live events</span></div>
+    </div>
+    <div class="evo-card">
+      <div class="evo-name purple-text">Magicpin</div>
+      <div class="evo-divider"></div>
+      <div class="evo-row"><span class="evo-badge then-badge">THEN</span><span style="font-size:13px;color:#555;">Local deal discovery app</span></div>
+      <div class="evo-arrow">↓ Deals App → Local Commerce Hub</div>
+      <div class="evo-row"><span class="evo-badge now-badge-purple">NOW</span><span style="font-size:13px;color:#333;font-weight:500;">Cashback + delivery + ONDC commerce</span></div>
+    </div>
+    <div class="evo-card">
+      <div class="evo-name green-text">EatSure</div>
+      <div class="evo-divider"></div>
+      <div class="evo-row"><span class="evo-badge then-badge">THEN</span><span style="font-size:13px;color:#555;">Single cloud kitchen brand</span></div>
+      <div class="evo-arrow">↓ Cloud Kitchen → Platform Business</div>
+      <div class="evo-row"><span class="evo-badge now-badge-green">NOW</span><span style="font-size:13px;color:#333;font-weight:500;">Multi-brand platform with hygiene focus</span></div>
+    </div>
+    <div class="evo-card">
+      <div class="evo-name" style="color:#d97706;">Dunzo</div>
+      <div class="evo-divider"></div>
+      <div class="evo-row"><span class="evo-badge then-badge">THEN</span><span style="font-size:13px;color:#555;">WhatsApp-based errand service</span></div>
+      <div class="evo-arrow">↓ Personal Errand → Quick Commerce</div>
+      <div class="evo-row"><span class="evo-badge now-badge-yellow">NOW</span><span style="font-size:13px;color:#333;font-weight:500;">Quick commerce with daily essentials</span></div>
+    </div>
+    <div class="evo-card">
+      <div class="evo-name blue-text">Shadowfax</div>
+      <div class="evo-divider"></div>
+      <div class="evo-row"><span class="evo-badge then-badge">THEN</span><span style="font-size:13px;color:#555;">E-commerce logistics startup</span></div>
+      <div class="evo-arrow">↓ B2B Logistics → Open Commerce Network</div>
+      <div class="evo-row"><span class="evo-badge now-badge-blue">NOW</span><span style="font-size:13px;color:#333;font-weight:500;">ONDC-enabled open delivery network</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN / KEY PRINCIPLES -->
+<section id="design" class="blue-bg">
+  <div class="section-label white"><span class="section-label-line"></span>HEURISTICS APPLIED</div>
+  <div class="section-h2" style="color:#fff;">Key Design Principles</div>
+  <div class="section-desc" style="color:rgba(255,255,255,.65);">UI/UX principles that separate the best food delivery apps from the rest.</div>
+  <div class="principles-grid">
+    <div class="principle-card"><div class="principle-icon">⬛</div><div class="principle-title">Visual Hierarchy</div><div class="principle-desc">Clear info priority — name, rating, price, ETA — guides faster decisions.</div></div>
+    <div class="principle-card"><div class="principle-icon">🔽</div><div class="principle-title">Progressive Disclosure</div><div class="principle-desc">Show only what's needed each step. Menu → Item → Customise → Cart.</div></div>
+    <div class="principle-card"><div class="principle-icon">✅</div><div class="principle-title">Feedback & Affordance</div><div class="principle-desc">Every tap should respond. Loading states and micro-animations confirm actions.</div></div>
+    <div class="principle-card"><div class="principle-icon">🛡️</div><div class="principle-title">Error Prevention</div><div class="principle-desc">Confirmations before cancellation, address validation, clear minimum order alerts.</div></div>
+  </div>
+  <div class="principles-grid-2" style="grid-template-columns:repeat(2,1fr);max-width:640px;">
+    <div class="principle-card"><div class="principle-icon">🔗</div><div class="principle-title">Consistency</div><div class="principle-desc">Uniform icon language, button styles, and colour usage across all screens.</div></div>
+    <div class="principle-card"><div class="principle-icon">♿</div><div class="principle-title">Accessibility</div><div class="principle-desc">AA contrast, 44×44px touch targets, screen reader labels, keyboard nav.</div></div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section id="comparison" style="background:var(--cream);padding:80px;">
+  <div class="section-h2">Best vs Average vs Worst</div>
+  <div class="section-desc">Side-by-side evaluation across all three performance tiers.</div>
+  <div class="compare-grid">
+    <div class="cmp-card best">
+      <div class="cmp-tier best">Best</div>
+      <ul class="cmp-list">
+        <li><span class="cmp-dot cmp-dot-green"></span>Highly personalized AI-driven UI</li>
+        <li><span class="cmp-dot cmp-dot-green"></span>Live map tracking with accurate ETAs</li>
+        <li><span class="cmp-dot cmp-dot-green"></span>Seamless re-order and smart suggestions</li>
+        <li><span class="cmp-dot cmp-dot-green"></span>Loyalty programs and super-app bundles</li>
+        <li><span class="cmp-dot cmp-dot-green"></span>Minimal friction from cart to delivery</li>
+      </ul>
+    </div>
+    <div class="cmp-card avg">
+      <div class="cmp-tier avg">Average</div>
+      <ul class="cmp-list">
+        <li><span class="cmp-dot cmp-dot-yellow"></span>Functional but visually cluttered</li>
+        <li><span class="cmp-dot cmp-dot-yellow"></span>Basic tracking, less polished</li>
+        <li><span class="cmp-dot cmp-dot-yellow"></span>Cashback UX adds complexity</li>
+        <li><span class="cmp-dot cmp-dot-yellow"></span>Moderate personalization via history</li>
+        <li><span class="cmp-dot cmp-dot-yellow"></span>Decent value but confusing flows</li>
+      </ul>
+    </div>
+    <div class="cmp-card worst">
+      <div class="cmp-tier worst">Worst</div>
+      <ul class="cmp-list">
+        <li><span class="cmp-dot cmp-dot-red"></span>Cluttered, inconsistent design</li>
+        <li><span class="cmp-dot cmp-dot-red"></span>No coherent navigation structure</li>
+        <li><span class="cmp-dot cmp-dot-red"></span>Unreliable search and discovery</li>
+        <li><span class="cmp-dot cmp-dot-red"></span>No smart features or personalization</li>
+        <li><span class="cmp-dot cmp-dot-red"></span>High friction, more user drop-off</li>
+      </ul>
+    </div>
+  </div>
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th>CRITERIA</th>
+        <th>BEST (SWIGGY, ZOMATO)</th>
+        <th>AVERAGE (MAGICPIN, EATSURE)</th>
+        <th>WORST (DUNZO, SHADOWFAX)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>UI Design</td><td>Clean, visual hierarchy, modern typography</td><td>Functional but visually busy</td><td>Cluttered, inconsistent design language</td></tr>
+      <tr><td>Personalization</td><td>AI-driven time & history-based suggestions</td><td>Basic order history recommendations</td><td>Minimal to none</td></tr>
+      <tr><td>Navigation</td><td>Intuitive tabs, smart search, quick re-order</td><td>Manageable but multi-step flows</td><td>Confusing categories, unreliable search</td></tr>
+      <tr><td>Delivery UX</td><td>Live map, ETA accuracy, real-time updates</td><td>Basic tracking, less polished</td><td>Functional but no delight</td></tr>
+      <tr><td>Value</td><td>Loyalty programs, bundled savings</td><td>Cashback incentives, moderate deals</td><td>No loyalty programs or rewards</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FLAWS -->
+<section id="flaws" style="background:var(--cream);padding:80px;">
+  <div class="section-label"><span class="section-label-line"></span>UX PROBLEMS IDENTIFIED</div>
+  <div class="section-h2">Systemic Flaws</div>
+  <div class="section-desc">Common UI/UX problems across food delivery apps that reduce trust and retention.</div>
+  <div class="flaws-grid">
+    <div class="flaw-card"><div class="flaw-icon">🍔</div><div class="flaw-title">Dark Pattern Checkout</div><div class="flaw-desc">Surge pricing revealed only at checkout — not upfront — eroding user trust.</div></div>
+    <div class="flaw-card"><div class="flaw-icon">🔔</div><div class="flaw-title">Notification Overload</div><div class="flaw-desc">Excessive promo notifications push users to disable all alerts, hurting retention.</div></div>
+    <div class="flaw-card"><div class="flaw-icon">📍</div><div class="flaw-title">Address Friction</div><div class="flaw-desc">Re-entering delivery addresses is a key pain point — poor location memory UX.</div></div>
+    <div class="flaw-card"><div class="flaw-icon">⭐</div><div class="flaw-title">Review Manipulation</div><div class="flaw-desc">Rating systems vulnerable to fake reviews, reducing the value of social proof.</div></div>
+  </div>
+  <div class="flaws-grid-2" style="margin-top:20px;">
+    <div class="flaw-card"><div class="flaw-icon">💸</div><div class="flaw-title">Hidden Fee Fatigue</div><div class="flaw-desc">Platform + packaging fees + GST shown only at cart — causing high abandonment.</div></div>
+    <div class="flaw-card"><div class="flaw-icon">🔍</div><div class="flaw-title">Weak Search UX</div><div class="flaw-desc">Most apps lack semantic search — users must know exact names to find dishes.</div></div>
+    <div class="flaw-card"><div class="flaw-icon">♿</div><div class="flaw-title">Accessibility Gaps</div><div class="flaw-desc">Poor contrast ratios and missing ARIA labels exclude users with disabilities.</div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="dots-bg">
+  <div class="footer-inner">
+    <div class="thank-you">Thank You</div>
+    <div class="footer-card">
+      <div class="footer-left">
+        <div class="footer-name">Anisha Sharma</div>
+        <div class="footer-reg">23FE10CSE00401 · CSE3252 – UI/UX Design</div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-right">
+        <div class="footer-tags">DESIGN · USABILITY</div>
+        <div class="footer-tags">PERSONALIZATION · ETHICS</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+  // Smooth scroll
+  navLinks.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+    });
+  });
+</script>
+</body>
+</html>
